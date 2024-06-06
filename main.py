@@ -5,42 +5,42 @@ import os
 pygame.init()
 
 relogio = pygame.time.Clock()
-icone  = pygame.image.load("assets/icone.png")
-iron = pygame.image.load("assets/iron.png")
-fundo = pygame.image.load("assets/fundo.png")
-fundoStart = pygame.image.load("assets/fundoStart.png")
-fundoDead = pygame.image.load("assets/fundoDead.png")
+icone  = pygame.image.load("assets/barbiefada.png")
+iron = pygame.image.load("assets/barbiefada.png")
+fundo = pygame.image.load("assets/fundojogoB.png")
+fundoStart = pygame.image.load("assets/fundoinicio.png")
+fundoDead = pygame.image.load("assets/morteBarbie.jpg")
 
-missel = pygame.image.load("assets/missile.png")
+skeezite = pygame.image.load("assets/skeezite.png")
 tamanho = (800,600)
 tela = pygame.display.set_mode( tamanho ) 
-pygame.display.set_caption("Iron Man do Marcão")
+pygame.display.set_caption("Barbie Butterfly")
 pygame.display.set_icon(icone)
-missileSound = pygame.mixer.Sound("assets/missile.wav")
-explosaoSound = pygame.mixer.Sound("assets/explosao.wav")
+# missileSound = pygame.mixer.Sound("assets/missile.wav")
+# explosaoSound = pygame.mixer.Sound("assets/explosao.wav")
 fonte = pygame.font.SysFont("comicsans",28)
 fonteStart = pygame.font.SysFont("comicsans",55)
 fonteMorte = pygame.font.SysFont("arial",120)
-pygame.mixer.music.load("assets/ironsound.mp3")
+pygame.mixer.music.load("assets/SouaBarbieGirl.mp3")
 
 branco = (255,255,255)
 preto = (0, 0 ,0 )
 
 def jogar():
-    pygame.mixer.Sound.play(missileSound)
+    # pygame.mixer.Sound.play(missileSound)
     pygame.mixer.music.play(-1)
     posicaoXPersona = 400
     posicaoYPersona = 300
     movimentoXPersona  = 0
     movimentoYPersona  = 0
-    posicaoXMissel = 400
-    posicaoYMissel = -240
-    velocidadeMissel = 1
+    posicaoXskeezite = 400
+    posicaoYskeezite = -240
+    velocidadeskeezite = 1
     pontos = 0
-    larguraPersona = 250
-    alturaPersona = 127
-    larguaMissel  = 50
-    alturaMissel  = 250
+    larguraPersona = 100
+    alturaPersona = 70
+    larguaskeezite  = 70
+    alturaskeezite  = 30
     dificuldade  = 20
 
     while True:
@@ -67,10 +67,10 @@ def jogar():
         posicaoXPersona = posicaoXPersona + movimentoXPersona            
         posicaoYPersona = posicaoYPersona + movimentoYPersona            
         
-        if posicaoXPersona < 0 :
-            posicaoXPersona = 10
-        elif posicaoXPersona >550:
-            posicaoXPersona = 540
+        if posicaoXPersona < -30 :
+            posicaoXPersona = -15
+        elif posicaoXPersona >620:
+            posicaoXPersona = 610
             
         if posicaoYPersona < 0 :
             posicaoYPersona = 10
@@ -83,28 +83,28 @@ def jogar():
         #pygame.draw.circle(tela, preto, (posicaoXPersona,posicaoYPersona), 40, 0 )
         tela.blit( iron, (posicaoXPersona, posicaoYPersona) )
         
-        posicaoYMissel = posicaoYMissel + velocidadeMissel
-        if posicaoYMissel > 600:
-            posicaoYMissel = -240
+        posicaoYskeezite = posicaoYskeezite + velocidadeskeezite
+        if posicaoYskeezite > 600:
+            posicaoYskeezite= -240
             pontos = pontos + 1
-            velocidadeMissel = velocidadeMissel + 1
-            posicaoXMissel = random.randint(0,800)
-            pygame.mixer.Sound.play(missileSound)
+            velocidadeskeezite = velocidadeskeezite + 1
+            posicaoXskeezite = random.randint(0,800)
+            # pygame.mixer.Sound.play(missileSound)
             
             
-        tela.blit( missel, (posicaoXMissel, posicaoYMissel) )
+        tela.blit( skeezite, (posicaoXskeezite, posicaoYskeezite) )
         
         texto = fonte.render("Pontos: "+str(pontos), True, branco)
         tela.blit(texto, (10,10))
         
         pixelsPersonaX = list(range(posicaoXPersona, posicaoXPersona+larguraPersona))
         pixelsPersonaY = list(range(posicaoYPersona, posicaoYPersona+alturaPersona))
-        pixelsMisselX = list(range(posicaoXMissel, posicaoXMissel + larguaMissel))
-        pixelsMisselY = list(range(posicaoYMissel, posicaoYMissel + alturaMissel))
+        pixelsSkeeziteX = list(range(posicaoXskeezite, posicaoXskeezite + larguaskeezite))
+        pixelsSkeeziteY = list(range(posicaoYskeezite, posicaoYskeezite + alturaskeezite))
         
         #print( len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )   )
-        if  len( list( set(pixelsMisselY).intersection(set(pixelsPersonaY))) ) > dificuldade:
-            if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
+        if  len( list( set(pixelsSkeeziteY).intersection(set(pixelsPersonaY))) ) > dificuldade:
+            if len( list( set(pixelsSkeeziteX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
                 dead()
         
     
@@ -115,7 +115,7 @@ def jogar():
 
 def dead():
     pygame.mixer.music.stop()
-    pygame.mixer.Sound.play(explosaoSound)
+    # pygame.mixer.Sound.play()
     while True:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
